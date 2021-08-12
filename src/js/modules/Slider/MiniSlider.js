@@ -2,6 +2,7 @@ import Slider from "./Slider";
 export default class MiniSlider extends Slider{
   constructor(container, next, prev, activeClass, animate, autoplay){
     super(container, next, prev, activeClass, animate, autoplay);
+    this.btns = 0;
   }
 
   decorizeSlide(){
@@ -21,14 +22,23 @@ export default class MiniSlider extends Slider{
 
   bindTriggers() {
     this.next.addEventListener('click', () => {
-      this.container.appendChild(this.slides[0]);
+      let active = this.slides[this.slides.length - (1 + this.btns)];
+      this.container.insertBefore(this.slides[0], active.nextSibling);
       this.decorizeSlide();
     });
     
     this.prev.addEventListener('click', () => {
-      let active = this.slides[this.slides.length - 1];
+      let active = this.slides[this.slides.length - (1 + this.btns)];
       this.container.insertBefore(active, this.slides[0]);
       this.decorizeSlide();
+    });
+  }
+
+  checkBtnsInContainer(){
+    this.slides.forEach(slide => {
+      if(slide.tagName === 'BUTTON'){
+        this.btns++;
+      }
     });
   }
 
@@ -39,6 +49,7 @@ export default class MiniSlider extends Slider{
       overflow: hidden;
       align-items: flex-start;
       `;
+    this.checkBtnsInContainer();  
     this.bindTriggers();
     this.decorizeSlide();
   }

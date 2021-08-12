@@ -3007,20 +3007,24 @@ function (_Slider) {
   _inherits(MiniSlider, _Slider);
 
   function MiniSlider(container, next, prev, activeClass, animate, autoplay) {
+    var _this;
+
     _classCallCheck(this, MiniSlider);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MiniSlider).call(this, container, next, prev, activeClass, animate, autoplay));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MiniSlider).call(this, container, next, prev, activeClass, animate, autoplay));
+    _this.btns = 0;
+    return _this;
   }
 
   _createClass(MiniSlider, [{
     key: "decorizeSlide",
     value: function decorizeSlide() {
-      var _this = this;
+      var _this2 = this;
 
       this.slides.forEach(function (slide) {
-        slide.classList.remove(_this.activeClass);
+        slide.classList.remove(_this2.activeClass);
 
-        if (_this.animate) {
+        if (_this2.animate) {
           slide.querySelector('.card__title').style.opacity = '0.4';
           slide.querySelector('.card__controls-arrow').style.opacity = '0.4';
         }
@@ -3035,25 +3039,39 @@ function (_Slider) {
   }, {
     key: "bindTriggers",
     value: function bindTriggers() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.next.addEventListener('click', function () {
-        _this2.container.appendChild(_this2.slides[0]);
+        var active = _this3.slides[_this3.slides.length - (1 + _this3.btns)];
 
-        _this2.decorizeSlide();
+        _this3.container.insertBefore(_this3.slides[0], active.nextSibling);
+
+        _this3.decorizeSlide();
       });
       this.prev.addEventListener('click', function () {
-        var active = _this2.slides[_this2.slides.length - 1];
+        var active = _this3.slides[_this3.slides.length - (1 + _this3.btns)];
 
-        _this2.container.insertBefore(active, _this2.slides[0]);
+        _this3.container.insertBefore(active, _this3.slides[0]);
 
-        _this2.decorizeSlide();
+        _this3.decorizeSlide();
+      });
+    }
+  }, {
+    key: "checkBtnsInContainer",
+    value: function checkBtnsInContainer() {
+      var _this4 = this;
+
+      this.slides.forEach(function (slide) {
+        if (slide.tagName === 'BUTTON') {
+          _this4.btns++;
+        }
       });
     }
   }, {
     key: "init",
     value: function init() {
       this.container.style.cssText = "\n      display: flex;\n      flex-wrap: wrap;\n      overflow: hidden;\n      align-items: flex-start;\n      ";
+      this.checkBtnsInContainer();
       this.bindTriggers();
       this.decorizeSlide();
     }
