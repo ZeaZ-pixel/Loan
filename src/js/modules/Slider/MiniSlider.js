@@ -21,17 +21,19 @@ export default class MiniSlider extends Slider{
   }
 
   bindTriggers() {
-    this.next.addEventListener('click', () => {
-      let active = this.slides[this.slides.length - (1 + this.btns)];
-      this.container.insertBefore(this.slides[0], active.nextSibling);
-      this.decorizeSlide();
-    });
+    this.next.addEventListener('click', () => this.nextSlide());
     
     this.prev.addEventListener('click', () => {
       let active = this.slides[this.slides.length - (1 + this.btns)];
       this.container.insertBefore(active, this.slides[0]);
       this.decorizeSlide();
     });
+  }
+
+  nextSlide(){
+    let active = this.slides[this.slides.length - (1 + this.btns)];
+    this.container.insertBefore(this.slides[0], active.nextSibling);
+    this.decorizeSlide();
   }
 
   checkBtnsInContainer(){
@@ -52,5 +54,9 @@ export default class MiniSlider extends Slider{
     this.checkBtnsInContainer();  
     this.bindTriggers();
     this.decorizeSlide();
+
+    if(this.autoplay){
+      setInterval(() => this.nextSlide(), 5000);
+    }
   }
 }

@@ -2763,6 +2763,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_Slider_MainSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/Slider/MainSlider */ "./src/js/modules/Slider/MainSlider.js");
 /* harmony import */ var _modules_Slider_MiniSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/Slider/MiniSlider */ "./src/js/modules/Slider/MiniSlider.js");
 /* harmony import */ var _modules_VideoPlayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/VideoPlayer */ "./src/js/modules/VideoPlayer.js");
+/* harmony import */ var _modules_Difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/Difference */ "./src/js/modules/Difference.js");
+
 
 
 
@@ -2784,7 +2786,8 @@ var modelesSlider = new _modules_Slider_MiniSlider__WEBPACK_IMPORTED_MODULE_1__[
   next: '.modules__info-btns .slick-next',
   prev: '.modules__info-btns .slick-prev',
   activeClass: 'card-active',
-  animate: true
+  animate: true,
+  autoplay: true
 });
 modelesSlider.init();
 var feedSlider = new _modules_Slider_MiniSlider__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -2796,6 +2799,81 @@ var feedSlider = new _modules_Slider_MiniSlider__WEBPACK_IMPORTED_MODULE_1__["de
 feedSlider.init();
 var player = new _modules_VideoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay');
 player.init();
+var difference = new _modules_Difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officernew', '.officer__card-item');
+difference.init();
+
+/***/ }),
+
+/***/ "./src/js/modules/Difference.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/Difference.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Difference; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Difference =
+/*#__PURE__*/
+function () {
+  function Difference(oldOfficer, newOfficer, items) {
+    _classCallCheck(this, Difference);
+
+    this.oldOfficer = document.querySelector(oldOfficer);
+    this.newOfficer = document.querySelector(newOfficer);
+    this.oldItems = this.oldOfficer.querySelectorAll(items);
+    this.newItems = this.newOfficer.querySelectorAll(items);
+    this.oldCounter = 0;
+    this.newCounter = 0;
+  }
+
+  _createClass(Difference, [{
+    key: "hideElem",
+    value: function hideElem(SomeItem) {
+      SomeItem.forEach(function (item, i, arr) {
+        if (i !== arr.length - 1) {
+          item.style.display = 'none';
+        }
+      });
+    }
+  }, {
+    key: "bindTriggers",
+    value: function bindTriggers(container, items, counter) {
+      container.querySelector('.plus').addEventListener('click', function () {
+        if (counter !== items.length - 2) {
+          items[counter].style.display = 'flex';
+          counter++;
+        } else {
+          items[counter].style.display = 'flex';
+          items[items.length - 1].remove();
+        }
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.hideElem(this.oldItems);
+      this.hideElem(this.newItems);
+      this.bindTriggers(this.oldOfficer, this.oldItems, this.oldCounter);
+      this.bindTriggers(this.newOfficer, this.newItems, this.newCounter);
+    }
+  }]);
+
+  return Difference;
+}();
+
+
 
 /***/ }),
 
@@ -3042,11 +3120,7 @@ function (_Slider) {
       var _this3 = this;
 
       this.next.addEventListener('click', function () {
-        var active = _this3.slides[_this3.slides.length - (1 + _this3.btns)];
-
-        _this3.container.insertBefore(_this3.slides[0], active.nextSibling);
-
-        _this3.decorizeSlide();
+        return _this3.nextSlide();
       });
       this.prev.addEventListener('click', function () {
         var active = _this3.slides[_this3.slides.length - (1 + _this3.btns)];
@@ -3055,6 +3129,13 @@ function (_Slider) {
 
         _this3.decorizeSlide();
       });
+    }
+  }, {
+    key: "nextSlide",
+    value: function nextSlide() {
+      var active = this.slides[this.slides.length - (1 + this.btns)];
+      this.container.insertBefore(this.slides[0], active.nextSibling);
+      this.decorizeSlide();
     }
   }, {
     key: "checkBtnsInContainer",
@@ -3070,10 +3151,18 @@ function (_Slider) {
   }, {
     key: "init",
     value: function init() {
+      var _this5 = this;
+
       this.container.style.cssText = "\n      display: flex;\n      flex-wrap: wrap;\n      overflow: hidden;\n      align-items: flex-start;\n      ";
       this.checkBtnsInContainer();
       this.bindTriggers();
       this.decorizeSlide();
+
+      if (this.autoplay) {
+        setInterval(function () {
+          return _this5.nextSlide();
+        }, 5000);
+      }
     }
   }]);
 
