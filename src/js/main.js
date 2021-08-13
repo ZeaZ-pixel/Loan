@@ -16,8 +16,8 @@ modelesSlider.init();
 const feedSlider = new MiniSlider({container: '.feed__slider', next: '.feed__slider .slick-next', prev: '.feed__slider .slick-prev',  activeClass: 'feed__item-active'});
 feedSlider.init();
 
-const player = new VideoPlayer('.showup .play', '.overlay');
-player.init();
+const showUpPlayer = new VideoPlayer('.showup .play', '.overlay');
+showUpPlayer.init();
 
 const difference = new Difference('.officerold', '.officernew', '.officer__card-item');
 difference.init();
@@ -27,3 +27,10 @@ joinForm.init();
 
 const scheduleForm = new Form('.schedule__form .form', 'assets/question.php', 'POST');
 scheduleForm.init();
+
+//secod page
+const modulePageSlider = new MainSlider({container: '.moduleapp', btns: '.next'});
+modulePageSlider.render();
+
+const modulVideo = new VideoPlayer('.module__video-item .play', '.overlay');
+modulVideo.init()

@@ -3,7 +3,7 @@ export default class Form{
     this.form = document.querySelector(form);
     this.url = url;
     this.method = method;
-    this.inputs = this.form.querySelectorAll('input');
+    this.inputs = document.querySelectorAll('input');
   }
 
   initMask() {
@@ -75,19 +75,20 @@ export default class Form{
   }
 
   init(){
-    this.initMask();
-    this.checkMailInputs();
+    try{
+      this.initMask();
+      this.checkMailInputs();
 
-    this.form.addEventListener('submit', (e) => {
-      e.preventDefault();
+      this.form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-      let statusMessage = document.createElement('div');
-      statusMessage.style.cssText = 
-        `
-          margin-top: 15px;
-          font-size: 18px;
-          color: grey;
-        `;
+        let statusMessage = document.createElement('div');
+        statusMessage.style.cssText = 
+          `
+            margin-top: 15px;
+            font-size: 18px;
+            color: grey;
+          `;
 
       this.form.parentNode.appendChild(statusMessage);
       statusMessage.textContent = 'Loading...';
@@ -112,6 +113,6 @@ export default class Form{
         });
 
     });
+    } catch(e) {} 
   }
-
 }
