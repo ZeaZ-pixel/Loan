@@ -18,6 +18,10 @@ export default class Difference {
 
   bindTriggers(container, items, counter){
     container.querySelector('.plus').addEventListener('click', () => {
+
+      items[counter].classList.add('animated', 'slideInDown');
+      items[items.length-1].classList.add('animated', 'slideInDown');
+      
       if(counter !== items.length - 2){
         items[counter].style.display = 'flex';
         counter++;
@@ -25,6 +29,7 @@ export default class Difference {
         items[counter].style.display = 'flex';
         items[items.length-1].remove();
       } 
+
     });
   }
 

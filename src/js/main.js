@@ -2,6 +2,7 @@ import MainSlider from "./modules/Slider/MainSlider";
 import MiniSlider from "./modules/Slider/MiniSlider";
 import VideoPlayer from "./modules/VideoPlayer";
 import Difference from "./modules/Difference";
+import Form from "./modules/Form";
 
 const slider = new MainSlider({container:'.page', btns: '.next'});
 slider.render();
@@ -20,3 +21,9 @@ player.init();
 
 const difference = new Difference('.officerold', '.officernew', '.officer__card-item');
 difference.init();
+
+const joinForm = new Form('.join__evolution .form', 'assets/question.php', 'POST');
+joinForm.init();
+
+const scheduleForm = new Form('.schedule__form .form', 'assets/question.php', 'POST');
+scheduleForm.init();
