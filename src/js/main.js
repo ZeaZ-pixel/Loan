@@ -3,6 +3,8 @@ import MiniSlider from "./modules/Slider/MiniSlider";
 import VideoPlayer from "./modules/VideoPlayer";
 import Difference from "./modules/Difference";
 import Form from "./modules/Form";
+import ShowInfo from "./modules/ShowInfo";
+import Download from "./modules/Download";
 
 const slider = new MainSlider({container:'.page', btns: '.next'});
 slider.render();
@@ -28,9 +30,16 @@ joinForm.init();
 const scheduleForm = new Form('.schedule__form .form', 'assets/question.php', 'POST');
 scheduleForm.init();
 
+
 //secod page
 const modulePageSlider = new MainSlider({container: '.moduleapp', btns: '.next'});
 modulePageSlider.render();
 
 const modulVideo = new VideoPlayer('.module__video-item .play', '.overlay');
-modulVideo.init()
+modulVideo.init();
+
+const showInfo = new ShowInfo('.module__info-show .plus', '.msg');
+showInfo.init();
+
+const download = new Download('.download');
+download.init();

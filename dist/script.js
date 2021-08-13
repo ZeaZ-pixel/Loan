@@ -5079,6 +5079,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_VideoPlayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/VideoPlayer */ "./src/js/modules/VideoPlayer.js");
 /* harmony import */ var _modules_Difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/Difference */ "./src/js/modules/Difference.js");
 /* harmony import */ var _modules_Form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/Form */ "./src/js/modules/Form.js");
+/* harmony import */ var _modules_ShowInfo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/ShowInfo */ "./src/js/modules/ShowInfo.js");
+/* harmony import */ var _modules_Download__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/Download */ "./src/js/modules/Download.js");
+
+
 
 
 
@@ -5129,6 +5133,10 @@ var modulePageSlider = new _modules_Slider_MainSlider__WEBPACK_IMPORTED_MODULE_0
 modulePageSlider.render();
 var modulVideo = new _modules_VideoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.module__video-item .play', '.overlay');
 modulVideo.init();
+var showInfo = new _modules_ShowInfo__WEBPACK_IMPORTED_MODULE_5__["default"]('.module__info-show .plus', '.msg');
+showInfo.init();
+var download = new _modules_Download__WEBPACK_IMPORTED_MODULE_6__["default"]('.download');
+download.init();
 
 /***/ }),
 
@@ -5206,6 +5214,69 @@ function () {
   }]);
 
   return Difference;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/modules/Download.js":
+/*!************************************!*\
+  !*** ./src/js/modules/Download.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Download; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Download =
+/*#__PURE__*/
+function () {
+  function Download(trigger) {
+    _classCallCheck(this, Download);
+
+    this.btns = document.querySelectorAll(trigger);
+    this.path = 'assets/img/mainbg.jpg';
+  }
+
+  _createClass(Download, [{
+    key: "downloadItem",
+    value: function downloadItem(path) {
+      var elem = document.createElement('a');
+      elem.setAttribute('href', path);
+      elem.setAttribute('download', 'noce_picture');
+      elem.style.display = 'none';
+      document.body.appendChild(elem);
+      elem.click();
+      document.body.removeChild(elem);
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.btns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+
+          _this.downloadItem(_this.path);
+        });
+      });
+    }
+  }]);
+
+  return Download;
 }();
 
 
@@ -5387,6 +5458,64 @@ function () {
   }]);
 
   return Form;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/modules/ShowInfo.js":
+/*!************************************!*\
+  !*** ./src/js/modules/ShowInfo.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ShowInfo; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var ShowInfo =
+/*#__PURE__*/
+function () {
+  function ShowInfo(triggers, msg) {
+    _classCallCheck(this, ShowInfo);
+
+    this.btn = document.querySelectorAll(triggers);
+    this.msg = document.querySelector(msg);
+  }
+
+  _createClass(ShowInfo, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.btn.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          _this.msg.classList.add('animated');
+
+          if (window.getComputedStyle(_this.msg).display === 'none') {
+            _this.msg.style.display = 'block';
+
+            _this.msg.classList.add('slideInDown');
+          } else {
+            _this.msg.style.display = 'none';
+          }
+        });
+      });
+    }
+  }]);
+
+  return ShowInfo;
 }();
 
 
